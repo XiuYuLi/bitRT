@@ -38,7 +38,8 @@ typedef enum bitrtResult_t
     bitrtErrorInvalidValue   = 2,
     bitrtErrorInvalidAccel   = 3,
     bitrtErrorInvalidCore    = 4,
-    bitrtErrorMemAllocFailed = 5
+    bitrtErrorMemAllocFailed = 5,
+    bitrtErrorOutOfMaxSize   = 6
 } bitrtResult;
 
 bitrtResult BITRTAPI bitrtInit();
@@ -47,7 +48,7 @@ bitrtResult BITRTAPI bitrtCreateAccel(bitrtAccel*);
 size_t      BITRTAPI bitrtGetAccelLeaderBuildingSize(uint32_t);
 size_t      BITRTAPI bitrtGetAccelLeaderSize(uint32_t);
 size_t      BITRTAPI bitrtBuildAccelLeader(bitrtAccel, void*, void*, const bitrtSence*);
-size_t      BITRTAPI bitrtBuildAccel(bitrtAccel, void*, size_t, const void*, const bitrtSence*);
+bitrtResult BITRTAPI bitrtBuildAccel(bitrtAccel, void*, size_t, const void*, const bitrtSence*);
 size_t      BITRTAPI bitrtGetAccelSize(bitrtAccel);
 bitrtResult BITRTAPI bitrtTrace(bitrtCore, bitrtAccel, bitrtPayload*);
 bool        BITRTAPI bitrtOccluded(bitrtCore, bitrtAccel, const bitrtPayload*, const bitrtFloat4*, int);
