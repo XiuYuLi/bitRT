@@ -3,6 +3,76 @@
 
 #include <stdint.h>
 
+typedef struct alignas(2) bitrtSbyte2_t
+{
+    int8_t x;
+    int8_t y;
+} bitrtSbyte2;
+
+typedef struct alignas(2) bitrtByte2_t
+{
+    uint8_t x;
+    uint8_t y;
+} bitrtByte2;
+
+typedef struct alignas(4) bitrtSbyte4_t
+{
+    int8_t x;
+    int8_t y;
+    int8_t z;
+    int8_t w;
+} bitrtSbyte4;
+
+typedef struct alignas(4) bitrtByte4_t
+{
+    uint8_t x;
+    uint8_t y;
+    uint8_t z;
+    uint8_t w;
+} bitrtByte4;
+
+typedef struct alignas(4) bitrtShort2_t
+{
+    int16_t x;
+    int16_t y;
+} bitrtShort2;
+
+typedef struct alignas(4) bitrtUshort2_t
+{
+    uint16_t x;
+    uint16_t y;
+} bitrtUshort2;
+
+typedef struct bitrtShort3_t
+{
+    int16_t x;
+    int16_t y;
+    int16_t z;
+} bitrtShort3;
+
+typedef struct bitrtUshort3_t
+{
+    uint16_t x;
+    uint16_t y;
+    uint16_t z;
+} bitrtUshort3;
+
+typedef struct alignas(8) bitrtShort4_t
+{
+    int16_t x;
+    int16_t y;
+    int16_t z;
+    int16_t w;
+} bitrtShort4;
+
+typedef struct alignas(8) bitrtUshort4_t
+{
+    uint16_t x;
+    uint16_t y;
+    uint16_t z;
+    uint16_t w;
+} bitrtUshort4;
+
 typedef struct alignas(8) bitrtFloat2_t
 {
     float x;
@@ -73,7 +143,6 @@ typedef struct alignas(8) bitrtInt2_t
 {
     int x;
     int y;
-    int z;
 } bitrtInt2;
 
 typedef struct rtInt3_t
@@ -103,6 +172,12 @@ typedef struct alignas(32) bitrtInt8_t
     int32_t s7;
 } bitrtInt8;
 
+typedef struct alignas(16) bitrtSize2_t
+{
+    size_t x;
+    size_t y;
+} bitrtSize2;
+
 typedef struct alignas(8) bitrtBox_t
 {
     bitrtFloat3 bmin;
@@ -119,7 +194,7 @@ typedef struct alignas(32) bitrtRay_t
             {
                 bitrtFloat4 o;
                 struct{
-                    bitrtFloat3 oxyz;
+                    bitrtFloat3 o3;
                     float tmin;
                 };
             };
@@ -127,7 +202,7 @@ typedef struct alignas(32) bitrtRay_t
             {
                 bitrtFloat4 d;
                 struct{
-                    bitrtFloat3 dxyz;
+                    bitrtFloat3 d3;
                     float tmax;
                 };
             };
@@ -138,38 +213,37 @@ typedef struct alignas(32) bitrtRay_t
 
 typedef struct alignas(16) bitrtHit_t
 {
-    uint32_t primID;
-    float dt;
-    float bu;
-    float bv;
+    union
+    {
+        struct
+        {
+            float    dt;
+            uint32_t primID;
+            float    bu;
+            float    bv;
+        };
+        bitrtFloat4 v;
+    };
 } bitrtHit;
 
 typedef struct bitrtPayload_t
 {
     bitrtRay ray;
     bitrtHit hit;
-    int instanceID;
-    int localPrimID;
-    int entry;
-    int depth;
+    int32_t  geoID;
+    int32_t  localPrimID;
+    int32_t  entry;
+    int32_t  depth;
 } bitrtPayload;
 
-
-typedef struct alignas(16) bitrtTriangleMesh_t
+typedef struct alignas(8) bitrtMesh_t
 {
-    uint64_t indexBufOffs;
+    size_t   coordBufOffs;
+    size_t   indexBufOffs;
     uint32_t vertCnt;
     uint32_t primCnt;
-} bitrtTriangleMesh;
-
-typedef struct bitrtMeshInstance_t
-{
-    uint64_t coordBufOffs;
-    uint32_t indexOffs;
-    uint32_t primOffs;
     bitrtBox aabb;
-    uint32_t meshID;
-} bitrtMeshInstance;
+} bitrtMesh;
 
 typedef struct alignas(16) bitrtSphere_t
 {
@@ -185,18 +259,14 @@ typedef struct alignas(16) bitrtSphere_t
 
 typedef struct bitrtSence_t
 {
-    bitrtUint3       * indexBuffer;
-    bitrtFloat3      * coordBuffer;
-    bitrtTriangleMesh* meshs;
-    bitrtMeshInstance* instances;
-    bitrtSphere_t    * spheres;
+    bitrtMesh   *meshs;
+    void        *indexBuffer;
+    bitrtFloat3 *coordBuffer;
     bitrtBox aabb;
     uint32_t meshCnt;
-    uint32_t instanceCnt;
-    uint32_t sphereCnt;
+    uint32_t vertCnt;
+    uint32_t primCnt;
     uint32_t faceFlags;
 } bitrtSence;
-
-typedef void (*bitrtShaderFunc)(bitrtPayload*);
 
 #endif

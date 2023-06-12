@@ -21,15 +21,14 @@
 #error "Only Support 64b-OS!"
 #endif
 
+#include <bitrt_types.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include <bitrt/bitrt_types.h>
-
-typedef struct __bitrtCore  *bitrtCore;
-typedef struct __bitrtAccel *bitrtAccel;
+typedef struct __bitrtCore *bitrtCore;
 
 typedef enum bitrtResult_t
 {
@@ -44,15 +43,13 @@ typedef enum bitrtResult_t
 
 bitrtResult BITRTAPI bitrtInit();
 bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
-bitrtResult BITRTAPI bitrtCreateAccel(bitrtAccel*);
-size_t      BITRTAPI bitrtGetAccelLeaderBuildingSize(uint32_t);
-size_t      BITRTAPI bitrtGetAccelLeaderSize(uint32_t);
-size_t      BITRTAPI bitrtBuildAccelLeader(bitrtAccel, void*, void*, const bitrtSence*);
-bitrtResult BITRTAPI bitrtBuildAccel(bitrtAccel, void*, size_t, const void*, const bitrtSence*);
-size_t      BITRTAPI bitrtGetAccelSize(bitrtAccel);
-bitrtResult BITRTAPI bitrtTrace(bitrtCore, bitrtAccel, bitrtPayload*);
-bool        BITRTAPI bitrtOccluded(bitrtCore, bitrtAccel, const bitrtPayload*, const bitrtFloat4*, int);
-bitrtResult BITRTAPI bitrtDestroyAccel(bitrtAccel);
+bitrtSize2  BITRTAPI bitrtGetAccelLeaderSizes(const bitrtSence*);
+bitrtSize2  BITRTAPI bitrtGetAccelSizes(const void*);
+bitrtResult BITRTAPI bitrtBuildAccelLeader(void*, void*, const bitrtSence*);
+bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, const void*, const bitrtSence*);
+size_t      BITRTAPI bitrtGetAccelActualSize(const void*);
+bitrtResult BITRTAPI bitrtTrace(bitrtCore, const void*, bitrtPayload*);
+bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtPayload*, const bitrtFloat4*, int);
 bitrtResult BITRTAPI bitrtDestroyCore(bitrtCore);
 
 #ifdef __cplusplus
