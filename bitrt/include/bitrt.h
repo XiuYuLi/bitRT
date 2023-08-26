@@ -21,33 +21,20 @@
 #error "Only Support 64b-OS!"
 #endif
 
-#include <bitrt_types.h>
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-typedef struct __bitrtCore *bitrtCore;
+#include <bitrt_types.h>
 
-typedef enum bitrtResult_t
-{
-    bitrtSuccess             = 0,
-    bitrtErrorInvalidDevice  = 1,
-    bitrtErrorInvalidValue   = 2,
-    bitrtErrorInvalidAccel   = 3,
-    bitrtErrorInvalidCore    = 4,
-    bitrtErrorMemAllocFailed = 5,
-    bitrtErrorOutOfMaxSize   = 6
-} bitrtResult;
+typedef struct __bitrtCore *bitrtCore;
 
 bitrtResult BITRTAPI bitrtInit();
 bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
-bitrtSize2  BITRTAPI bitrtGetAccelLeaderSizes(const bitrtSence*);
-bitrtSize2  BITRTAPI bitrtGetAccelSizes(const void*);
-bitrtResult BITRTAPI bitrtBuildAccelLeader(void*, void*, const bitrtSence*);
-bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, const void*, const bitrtSence*);
-size_t      BITRTAPI bitrtGetAccelActualSize(const void*);
+bitrtResult BITRTAPI bitrtCheckExternalAccel(const bitrtExternalAccel*);
+bitrtSize3  BITRTAPI bitrtGetExternalAccelBuildingSizes(const bitrtExternalAccel*, const bitrtSence*);
+bitrtResult BITRTAPI bitrtBuildExternalAccel(void*, void*, size_t, const bitrtExternalAccel*, const bitrtSence*);
 bitrtResult BITRTAPI bitrtTrace(bitrtCore, const void*, bitrtPayload*);
 bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtPayload*, const bitrtFloat4*, int);
 bitrtResult BITRTAPI bitrtDestroyCore(bitrtCore);

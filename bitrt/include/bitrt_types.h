@@ -3,11 +3,22 @@
 
 #include <stdint.h>
 
-typedef struct alignas(2) bitrtSbyte2_t
+typedef enum bitrtResult_t
+{
+    bitrtSuccess             = 0,
+    bitrtErrorInvalidDevice  = 1,
+    bitrtErrorInvalidValue   = 2,
+    bitrtErrorInvalidAccel   = 3,
+    bitrtErrorInvalidCore    = 4,
+    bitrtErrorMemAllocFailed = 5,
+    bitrtErrorOutOfMaxSize   = 6
+} bitrtResult;
+
+typedef struct alignas(2) bitrtChar2_t
 {
     int8_t x;
     int8_t y;
-} bitrtSbyte2;
+} bitrtChar2;
 
 typedef struct alignas(2) bitrtByte2_t
 {
@@ -15,13 +26,13 @@ typedef struct alignas(2) bitrtByte2_t
     uint8_t y;
 } bitrtByte2;
 
-typedef struct alignas(4) bitrtSbyte4_t
+typedef struct alignas(4) bitrtChar4_t
 {
     int8_t x;
     int8_t y;
     int8_t z;
     int8_t w;
-} bitrtSbyte4;
+} bitrtChar4;
 
 typedef struct alignas(4) bitrtByte4_t
 {
@@ -73,39 +84,6 @@ typedef struct alignas(8) bitrtUshort4_t
     uint16_t w;
 } bitrtUshort4;
 
-typedef struct alignas(8) bitrtFloat2_t
-{
-    float x;
-    float y;
-} bitrtFloat2;
-
-typedef struct bitrtFloat3_t
-{
-    float x;
-    float y;
-    float z;
-} bitrtFloat3;
-
-typedef struct alignas(16) bitrtFloat4_t
-{
-    float x;
-    float y;
-    float z;
-    float w;
-} bitrtFloat4;
-
-typedef struct alignas(32) bitrtFloat8_t
-{
-    float s0;
-    float s1;
-    float s2;
-    float s3;
-    float s4;
-    float s5;
-    float s6;
-    float s7;
-} bitrtFloat8;
-
 typedef struct alignas(8) bitrtUint2_t
 {
     uint32_t x;
@@ -141,8 +119,8 @@ typedef struct alignas(32) bitrtUint8_t
 
 typedef struct alignas(8) bitrtInt2_t
 {
-    int x;
-    int y;
+    int32_t x;
+    int32_t y;
 } bitrtInt2;
 
 typedef struct rtInt3_t
@@ -162,14 +140,14 @@ typedef struct alignas(16) bitrtInt4_t
 
 typedef struct alignas(32) bitrtInt8_t
 {
-    int32_t s0;
-    int32_t s1;
-    int32_t s2;
-    int32_t s3;
-    int32_t s4;
-    int32_t s5;
-    int32_t s6;
-    int32_t s7;
+    int s0;
+    int s1;
+    int s2;
+    int s3;
+    int s4;
+    int s5;
+    int s6;
+    int s7;
 } bitrtInt8;
 
 typedef struct alignas(16) bitrtSize2_t
@@ -178,11 +156,54 @@ typedef struct alignas(16) bitrtSize2_t
     size_t y;
 } bitrtSize2;
 
-typedef struct alignas(8) bitrtBox_t
+typedef struct alignas(8) bitrtSize3_t
 {
-    bitrtFloat3 bmin;
-    bitrtFloat3 bmax;
-} bitrtBox;
+    size_t x;
+    size_t y;
+    size_t z;
+} bitrtSize3;
+
+typedef struct alignas(8) bitrtFloat2_t
+{
+    float x;
+    float y;
+} bitrtFloat2;
+
+typedef struct bitrtFloat3_t
+{
+    float x;
+    float y;
+    float z;
+} bitrtFloat3;
+
+typedef struct alignas(16) bitrtFloat4_t
+{
+    float x;
+    float y;
+    float z;
+    float w;
+} bitrtFloat4;
+
+typedef struct alignas(32) bitrtFloat8_t
+{
+    float s0;
+    float s1;
+    float s2;
+    float s3;
+    float s4;
+    float s5;
+    float s6;
+    float s7;
+} bitrtFloat8;
+
+typedef struct alignas(16) bitrtExternalAccel_t
+{
+    uint64_t* root;
+    uint32_t* leafPrimlistPtr;
+    uint32_t* leafPrimlist;
+    uint32_t  nodeCnt;
+    uint32_t  depth;
+} bitrtExternalAccel;
 
 typedef struct alignas(32) bitrtRay_t
 {
@@ -230,20 +251,10 @@ typedef struct bitrtPayload_t
 {
     bitrtRay ray;
     bitrtHit hit;
-    int32_t  geoID;
-    int32_t  localPrimID;
-    int32_t  entry;
-    int32_t  depth;
+    int      localPrimID;
+    int      entry;
+    int      depth;
 } bitrtPayload;
-
-typedef struct alignas(8) bitrtMesh_t
-{
-    size_t   coordBufOffs;
-    size_t   indexBufOffs;
-    uint32_t vertCnt;
-    uint32_t primCnt;
-    bitrtBox aabb;
-} bitrtMesh;
 
 typedef struct alignas(16) bitrtSphere_t
 {
@@ -257,16 +268,14 @@ typedef struct alignas(16) bitrtSphere_t
     };
 } bitrtSphere;
 
-typedef struct bitrtSence_t
+typedef struct alignas(16) bitrtSence_t
 {
-    bitrtMesh   *meshs;
-    void        *indexBuffer;
-    bitrtFloat3 *coordBuffer;
-    bitrtBox aabb;
-    uint32_t meshCnt;
-    uint32_t vertCnt;
-    uint32_t primCnt;
-    uint32_t faceFlags;
+    bitrtFloat4  bmin;
+    bitrtFloat4  bmax;
+    void       * indexBuffer;
+    bitrtFloat3* coordBuffer;
+    uint32_t     vertCnt;
+    uint32_t     primCnt;
 } bitrtSence;
 
 #endif
