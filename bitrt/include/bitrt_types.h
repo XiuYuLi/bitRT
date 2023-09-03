@@ -123,7 +123,7 @@ typedef struct alignas(8) bitrtInt2_t
     int32_t y;
 } bitrtInt2;
 
-typedef struct rtInt3_t
+typedef struct bitrtInt3_t
 {
     int x;
     int y;
