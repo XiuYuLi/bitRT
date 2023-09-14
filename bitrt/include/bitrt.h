@@ -26,7 +26,7 @@ extern "C"
 {
 #endif
 
-#include <bitrt_types.h>
+#include "bitrt_types.h"
 
 typedef struct __bitrtCore *bitrtCore;
 
@@ -35,8 +35,9 @@ bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
 bitrtResult BITRTAPI bitrtCheckExternalAccel(const bitrtExternalAccel*);
 bitrtSize3  BITRTAPI bitrtGetExternalAccelBuildingSizes(const bitrtExternalAccel*, const bitrtSence*);
 bitrtResult BITRTAPI bitrtBuildExternalAccel(void*, void*, size_t, const bitrtExternalAccel*, const bitrtSence*);
-bitrtResult BITRTAPI bitrtTrace(bitrtCore, const void*, bitrtPayload*);
-bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtPayload*, const bitrtFloat4*, int);
+bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, size_t, const bitrtSence*);
+bitrtResult BITRTAPI bitrtTrace(bitrtCore, const void*, bitrtPayload*, float);
+bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtPayload*, const bitrtFloat4*, int, float);
 bitrtResult BITRTAPI bitrtDestroyCore(bitrtCore);
 
 #ifdef __cplusplus

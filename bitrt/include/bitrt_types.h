@@ -251,9 +251,7 @@ typedef struct bitrtPayload_t
 {
     bitrtRay ray;
     bitrtHit hit;
-    int      localPrimID;
-    int      entry;
-    int      depth;
+    int entry;
 } bitrtPayload;
 
 typedef struct alignas(16) bitrtSphere_t
@@ -274,6 +272,7 @@ typedef struct alignas(16) bitrtSence_t
     bitrtFloat4  bmax;
     void       * indexBuffer;
     bitrtFloat3* coordBuffer;
+    uint64_t     cullMask;
     uint32_t     vertCnt;
     uint32_t     primCnt;
 } bitrtSence;
