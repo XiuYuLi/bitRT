@@ -247,13 +247,6 @@ typedef struct alignas(16) bitrtHit_t
     };
 } bitrtHit;
 
-typedef struct bitrtPayload_t
-{
-    bitrtRay ray;
-    bitrtHit hit;
-    int entry;
-} bitrtPayload;
-
 typedef struct alignas(16) bitrtSphere_t
 {
     union
