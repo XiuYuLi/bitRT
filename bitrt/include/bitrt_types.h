@@ -156,13 +156,6 @@ typedef struct alignas(16) bitrtSize2_t
     size_t y;
 } bitrtSize2;
 
-typedef struct alignas(8) bitrtSize3_t
-{
-    size_t x;
-    size_t y;
-    size_t z;
-} bitrtSize3;
-
 typedef struct alignas(8) bitrtFloat2_t
 {
     float x;
@@ -263,7 +256,7 @@ typedef struct alignas(16) bitrtSence_t
 {
     bitrtFloat4  bmin;
     bitrtFloat4  bmax;
-    void       * indexBuffer;
+    bitrtUint3 * indexBuffer;
     bitrtFloat3* coordBuffer;
     uint64_t     cullMask;
     uint32_t     vertCnt;
