@@ -12,8 +12,6 @@
 *.pch
 
 # Compiled Dynamic libraries
-*.so
-*.dylib
 
 # Fortran module files
 *.mod
