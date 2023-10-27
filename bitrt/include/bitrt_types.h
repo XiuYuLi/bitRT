@@ -164,23 +164,20 @@ typedef struct alignas(16) bitrtExternalAccel_t
 
 typedef struct alignas(32) bitrtRay_t
 {
-    struct
+    union
     {
-        union
-        {
-            bitrtFloat4 o;
-            struct{
-                bitrtFloat3 o3;
-                float tmin;
-            };
+        bitrtFloat4 o;
+        struct{
+            bitrtFloat3 o3;
+            float tmin;
         };
-        union
-        {
-            bitrtFloat4 d;
-            struct{
-                bitrtFloat3 d3;
-                float tmax;
-            };
+    };
+    union
+    {
+        bitrtFloat4 d;
+        struct{
+            bitrtFloat3 d3;
+            float tmax;
         };
     };
 } bitrtRay;
