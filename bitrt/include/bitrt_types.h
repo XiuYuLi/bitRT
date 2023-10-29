@@ -166,17 +166,17 @@ typedef struct alignas(32) bitrtRay_t
 {
     union
     {
-        bitrtFloat4 o;
-        struct{
-            bitrtFloat3 o3;
+        bitrtFloat4 vlo;
+        struct alignas(16){
+            bitrtFloat3 o;
             float tmin;
         };
     };
     union
     {
-        bitrtFloat4 d;
-        struct{
-            bitrtFloat3 d3;
+        bitrtFloat4 vhi;
+        struct alignas(16){
+            bitrtFloat3 d;
             float tmax;
         };
     };
@@ -186,14 +186,13 @@ typedef struct alignas(16) bitrtHit_t
 {
     union
     {
-        struct
-        {
-            float    dt;
-            uint32_t primID;
-            float    bu;
-            float    bv;
-        };
         bitrtFloat4 v;
+        struct alignas(16){
+            float dt;
+            int   primID;
+            float bu;
+            float bv;
+        };
     };
 } bitrtHit;
 
@@ -202,7 +201,7 @@ typedef struct alignas(16) bitrtSphere_t
     union
     {
         bitrtFloat4 v;
-        struct{
+        struct alignas(16){
             bitrtFloat3 centre;
             float radius;
         };

@@ -35,7 +35,7 @@ bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
 bitrtResult BITRTAPI bitrtCheckExternalAccel(const bitrtExternalAccel*);
 bitrtSize2  BITRTAPI bitrtGetExternalAccelBuildingSizes(const bitrtExternalAccel*, const bitrtSence*);
 bitrtResult BITRTAPI bitrtBuildExternalAccel(void*, void*, const bitrtExternalAccel*, const bitrtSence*);
-bitrtResult BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const void*, const bitrtRay*, int);
+int         BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const void*, const bitrtRay*, int);
 bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtFloat4*, const bitrtFloat4*, int, int);
 bitrtResult BITRTAPI bitrtDestroyCore(bitrtCore);
 
