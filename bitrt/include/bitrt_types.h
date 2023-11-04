@@ -214,9 +214,34 @@ typedef struct alignas(16) bitrtSence_t
     bitrtFloat4  bmax;
     bitrtUint3 * indexBuffer;
     bitrtFloat3* coordBuffer;
-    uint64_t     cullMask;
     uint32_t     vertCnt;
     uint32_t     primCnt;
 } bitrtSence;
+
+typedef struct alignas(16) bitrtMesh_t
+{
+    bitrtUint3* indexBuffer;
+    uint32_t    vertCnt;
+    uint32_t    primCnt;
+} bitrtMesh;
+
+typedef struct alignas(16) bitrtMeshInstances_t
+{
+    uint32_t      meshID;
+    uint32_t      instCnt;
+    bitrtFloat3** coordBuffers;
+} bitrtMeshInstances;
+
+typedef struct alignas(16) bitrtSenceEx_t
+{
+    bitrtFloat4         bmin;
+    bitrtFloat4         bmax;
+    bitrtMesh         * meshs;
+    bitrtMeshInstances* instances;
+    uint32_t            meshCnt;
+    uint32_t            vertCnt;
+    uint32_t            primCnt;
+    uint32_t            pad;
+} bitrtSenceEx;
 
 #endif
