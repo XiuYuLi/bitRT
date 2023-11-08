@@ -3,6 +3,12 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+#define __align(n) alignas(n)
+#else
+#define __algin(n) _Alignas(n)
+#endif
+
 typedef enum bitrtResult_t
 {
     bitrtSuccess             = 0,
@@ -14,19 +20,19 @@ typedef enum bitrtResult_t
     bitrtErrorOutOfMaxSize   = 6
 } bitrtResult;
 
-typedef struct alignas(2) bitrtChar2_t
+typedef struct __align(2) bitrtChar2_t
 {
     int8_t x;
     int8_t y;
 } bitrtChar2;
 
-typedef struct alignas(2) bitrtByte2_t
+typedef struct __align(2) bitrtByte2_t
 {
     uint8_t x;
     uint8_t y;
 } bitrtByte2;
 
-typedef struct alignas(4) bitrtChar4_t
+typedef struct __align(4) bitrtChar4_t
 {
     int8_t x;
     int8_t y;
@@ -34,7 +40,7 @@ typedef struct alignas(4) bitrtChar4_t
     int8_t w;
 } bitrtChar4;
 
-typedef struct alignas(4) bitrtByte4_t
+typedef struct __align(4) bitrtByte4_t
 {
     uint8_t x;
     uint8_t y;
@@ -42,13 +48,13 @@ typedef struct alignas(4) bitrtByte4_t
     uint8_t w;
 } bitrtByte4;
 
-typedef struct alignas(4) bitrtShort2_t
+typedef struct __align(4) bitrtShort2_t
 {
     int16_t x;
     int16_t y;
 } bitrtShort2;
 
-typedef struct alignas(4) bitrtUshort2_t
+typedef struct __align(4) bitrtUshort2_t
 {
     uint16_t x;
     uint16_t y;
@@ -68,7 +74,7 @@ typedef struct bitrtUshort3_t
     uint16_t z;
 } bitrtUshort3;
 
-typedef struct alignas(8) bitrtShort4_t
+typedef struct __align(8) bitrtShort4_t
 {
     int16_t x;
     int16_t y;
@@ -76,7 +82,7 @@ typedef struct alignas(8) bitrtShort4_t
     int16_t w;
 } bitrtShort4;
 
-typedef struct alignas(8) bitrtUshort4_t
+typedef struct __align(8) bitrtUshort4_t
 {
     uint16_t x;
     uint16_t y;
@@ -84,7 +90,7 @@ typedef struct alignas(8) bitrtUshort4_t
     uint16_t w;
 } bitrtUshort4;
 
-typedef struct alignas(8) bitrtUint2_t
+typedef struct __align(8) bitrtUint2_t
 {
     uint32_t x;
     uint32_t y;
@@ -97,7 +103,7 @@ typedef struct bitrtUint3_t
     uint32_t z;
 } bitrtUint3;
 
-typedef struct alignas(16) bitrtUint4_t
+typedef struct __align(16) bitrtUint4_t
 {
     uint32_t x;
     uint32_t y;
@@ -105,7 +111,7 @@ typedef struct alignas(16) bitrtUint4_t
     uint32_t w;
 } bitrtUint4;
 
-typedef struct alignas(8) bitrtInt2_t
+typedef struct __align(8) bitrtInt2_t
 {
     int32_t x;
     int32_t y;
@@ -118,7 +124,7 @@ typedef struct bitrtInt3_t
     int z;
 } bitrtInt3;
 
-typedef struct alignas(16) bitrtInt4_t
+typedef struct __align(16) bitrtInt4_t
 {
     int x;
     int y;
@@ -126,13 +132,13 @@ typedef struct alignas(16) bitrtInt4_t
     int w;
 } bitrtInt4;
 
-typedef struct alignas(16) bitrtSize2_t
+typedef struct __align(16) bitrtSize2_t
 {
     size_t x;
     size_t y;
 } bitrtSize2;
 
-typedef struct alignas(8) bitrtFloat2_t
+typedef struct __align(8) bitrtFloat2_t
 {
     float x;
     float y;
@@ -145,7 +151,7 @@ typedef struct bitrtFloat3_t
     float z;
 } bitrtFloat3;
 
-typedef struct alignas(16) bitrtFloat4_t
+typedef struct __align(16) bitrtFloat4_t
 {
     float x;
     float y;
@@ -153,7 +159,7 @@ typedef struct alignas(16) bitrtFloat4_t
     float w;
 } bitrtFloat4;
 
-typedef struct alignas(16) bitrtExternalAccel_t
+typedef struct __align(16) bitrtExternalAccel_t
 {
     uint64_t* root;
     uint32_t* leafPrimlistPtr;
@@ -162,12 +168,12 @@ typedef struct alignas(16) bitrtExternalAccel_t
     uint32_t  depth;
 } bitrtExternalAccel;
 
-typedef struct alignas(32) bitrtRay_t
+typedef struct __align(32) bitrtRay_t
 {
     union
     {
         bitrtFloat4 vlo;
-        struct alignas(16){
+        struct __align(16){
             bitrtFloat3 o;
             float tmin;
         };
@@ -175,19 +181,19 @@ typedef struct alignas(32) bitrtRay_t
     union
     {
         bitrtFloat4 vhi;
-        struct alignas(16){
+        struct __align(16){
             bitrtFloat3 d;
             float tmax;
         };
     };
 } bitrtRay;
 
-typedef struct alignas(16) bitrtHit_t
+typedef struct __align(16) bitrtHit_t
 {
     union
     {
         bitrtFloat4 v;
-        struct alignas(16){
+        struct __align(16){
             float dt;
             int   primID;
             float bu;
@@ -196,19 +202,19 @@ typedef struct alignas(16) bitrtHit_t
     };
 } bitrtHit;
 
-typedef struct alignas(16) bitrtSphere_t
+typedef struct __align(16) bitrtSphere_t
 {
     union
     {
         bitrtFloat4 v;
-        struct alignas(16){
+        struct __align(16){
             bitrtFloat3 centre;
             float radius;
         };
     };
 } bitrtSphere;
 
-typedef struct alignas(16) bitrtSence_t
+typedef struct __align(16) bitrtSence_t
 {
     bitrtFloat4  bmin;
     bitrtFloat4  bmax;
@@ -218,21 +224,21 @@ typedef struct alignas(16) bitrtSence_t
     uint32_t     primCnt;
 } bitrtSence;
 
-typedef struct alignas(16) bitrtMesh_t
+typedef struct __align(16) bitrtMesh_t
 {
     bitrtUint3* indexBuffer;
     uint32_t    vertCnt;
     uint32_t    primCnt;
 } bitrtMesh;
 
-typedef struct alignas(16) bitrtMeshInstances_t
+typedef struct __align(16) bitrtMeshInstances_t
 {
+    bitrtFloat3** coordBuffers;
     uint32_t      meshID;
     uint32_t      instCnt;
-    bitrtFloat3** coordBuffers;
 } bitrtMeshInstances;
 
-typedef struct alignas(16) bitrtSenceEx_t
+typedef struct __align(16) bitrtSenceEx_t
 {
     bitrtFloat4         bmin;
     bitrtFloat4         bmax;
