@@ -173,7 +173,7 @@ typedef struct __align(32) bitrtRay_t
     union
     {
         bitrtFloat4 vlo;
-        struct __align(16){
+        struct __align(16) {
             bitrtFloat3 o;
             float tmin;
         };
@@ -181,7 +181,7 @@ typedef struct __align(32) bitrtRay_t
     union
     {
         bitrtFloat4 vhi;
-        struct __align(16){
+        struct __align(16) {
             bitrtFloat3 d;
             float tmax;
         };
@@ -193,7 +193,7 @@ typedef struct __align(16) bitrtHit_t
     union
     {
         bitrtFloat4 v;
-        struct __align(16){
+        struct __align(16) {
             float dt;
             int   primID;
             float bu;
@@ -207,7 +207,7 @@ typedef struct __align(16) bitrtSphere_t
     union
     {
         bitrtFloat4 v;
-        struct __align(16){
+        struct __align(16) {
             bitrtFloat3 centre;
             float radius;
         };
@@ -222,32 +222,7 @@ typedef struct __align(16) bitrtSence_t
     bitrtFloat3* coordBuffer;
     uint32_t     vertCnt;
     uint32_t     primCnt;
+    uint8_t      pad[8];
 } bitrtSence;
-
-typedef struct __align(16) bitrtMesh_t
-{
-    bitrtUint3* indexBuffer;
-    uint32_t    vertCnt;
-    uint32_t    primCnt;
-} bitrtMesh;
-
-typedef struct __align(16) bitrtMeshInstances_t
-{
-    bitrtFloat3** coordBuffers;
-    uint32_t      meshID;
-    uint32_t      instCnt;
-} bitrtMeshInstances;
-
-typedef struct __align(16) bitrtSenceEx_t
-{
-    bitrtFloat4         bmin;
-    bitrtFloat4         bmax;
-    bitrtMesh         * meshs;
-    bitrtMeshInstances* instances;
-    uint32_t            meshCnt;
-    uint32_t            vertCnt;
-    uint32_t            primCnt;
-    uint32_t            pad;
-} bitrtSenceEx;
 
 #endif
