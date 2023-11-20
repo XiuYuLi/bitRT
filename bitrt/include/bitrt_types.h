@@ -15,9 +15,8 @@ typedef enum bitrtResult_t
     bitrtErrorInvalidDevice  = 1,
     bitrtErrorInvalidValue   = 2,
     bitrtErrorInvalidAccel   = 3,
-    bitrtErrorInvalidCore    = 4,
-    bitrtErrorMemAllocFailed = 5,
-    bitrtErrorOutOfMaxSize   = 6
+    bitrtErrorMemAllocFailed = 4,
+    bitrtErrorOutOfMaxSize   = 5
 } bitrtResult;
 
 typedef struct __align(2) bitrtChar2_t
