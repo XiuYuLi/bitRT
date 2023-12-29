@@ -1,22 +1,23 @@
 #ifndef __bitrt_types_h__
 #define __bitrt_types_h__
 
-#include <stdint.h>
-
 #ifdef __cplusplus
+#include <cstdint>
 #define __align(n) alignas(n)
 #else
+#include <stdint.h>
 #define __algin(n) _Alignas(n)
 #endif
 
 typedef enum bitrtResult_t
 {
-    bitrtSuccess             = 0,
-    bitrtErrorInvalidDevice  = 1,
-    bitrtErrorInvalidValue   = 2,
-    bitrtErrorInvalidAccel   = 3,
-    bitrtErrorMemAllocFailed = 4,
-    bitrtErrorOutOfMaxSize   = 5
+    bitrtSuccess                = 0,
+    bitrtErrorInvalidDevice     = 1,
+    bitrtErrorInvalidValue      = 2,
+    bitrtErrorInvalidAccel      = 3,
+    bitrtErrorMemAllocFailed    = 4,
+    bitrtErrorOutOfMaxSize      = 5,
+    bitrtErrorOutOfMaxPrimCount = 6
 } bitrtResult;
 
 typedef struct __align(2) bitrtChar2_t
@@ -158,7 +159,7 @@ typedef struct __align(16) bitrtFloat4_t
     float w;
 } bitrtFloat4;
 
-typedef struct __align(16) bitrtExternalAccel_t
+typedef struct bitrtExternalAccel_t
 {
     uint64_t* root;
     uint32_t* leafPrimlistPtr;
@@ -167,11 +168,11 @@ typedef struct __align(16) bitrtExternalAccel_t
     uint32_t  depth;
 } bitrtExternalAccel;
 
-typedef struct __align(32) bitrtRay_t
+typedef struct __align(16) bitrtRay_t
 {
     union
     {
-        bitrtFloat4 vlo;
+        bitrtFloat4 org;
         struct __align(16) {
             bitrtFloat3 o;
             float tmin;
@@ -179,12 +180,13 @@ typedef struct __align(32) bitrtRay_t
     };
     union
     {
-        bitrtFloat4 vhi;
+        bitrtFloat4 dir;
         struct __align(16) {
             bitrtFloat3 d;
             float tmax;
         };
     };
+    bitrtFloat4 rdir;
 } bitrtRay;
 
 typedef struct __align(16) bitrtHit_t
@@ -193,8 +195,8 @@ typedef struct __align(16) bitrtHit_t
     {
         bitrtFloat4 v;
         struct __align(16) {
-            float dt;
             int   primID;
+            float dt;
             float bu;
             float bv;
         };
