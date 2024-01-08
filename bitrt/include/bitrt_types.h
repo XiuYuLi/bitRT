@@ -191,16 +191,10 @@ typedef struct __align(16) bitrtRay_t
 
 typedef struct __align(16) bitrtHit_t
 {
-    union
-    {
-        bitrtFloat4 v;
-        struct __align(16) {
-            int   primID;
-            float dt;
-            float bu;
-            float bv;
-        };
-    };
+    int   primID;
+    float dt;
+    float bu;
+    float bv;
 } bitrtHit;
 
 typedef struct __align(16) bitrtSphere_t
