@@ -11,13 +11,16 @@
 
 typedef enum bitrtResult_t
 {
-    bitrtSuccess                = 0,
-    bitrtErrorInvalidDevice     = 1,
-    bitrtErrorInvalidValue      = 2,
-    bitrtErrorInvalidAccel      = 3,
-    bitrtErrorMemAllocFailed    = 4,
-    bitrtErrorOutOfMaxSize      = 5,
-    bitrtErrorOutOfMaxPrimCount = 6
+    bitrtSuccess                  = 0,
+    bitrtErrorInvalidDevice       = 1,
+    bitrtErrorInvalidValue        = 2,
+    bitrtErrorInvalidAccel        = 3,
+    bitrtErrorMemAllocFailed      = 4,
+    bitrtErrorOutOfMaxAccelSize   = 5,
+    bitrtErrorOutOfMaxMeshCount   = 6,
+    bitrtErrorOutOfMaxPrimCount   = 7,
+    bitrtErrorOutOfMaxLeafSize    = 8,
+    bitrtErrorOutOfMaxBranchCount = 9
 } bitrtResult;
 
 typedef struct __align(2) bitrtChar2_t
@@ -159,33 +162,12 @@ typedef struct __align(16) bitrtFloat4_t
     float w;
 } bitrtFloat4;
 
-typedef struct bitrtExternalAccel_t
-{
-    uint64_t* root;
-    uint32_t* leafPrimlistPtr;
-    uint32_t* leafPrimlist;
-    uint32_t  nodeCnt;
-    uint32_t  depth;
-} bitrtExternalAccel;
-
 typedef struct __align(16) bitrtRay_t
 {
-    union
-    {
-        bitrtFloat4 org;
-        struct __align(16) {
-            bitrtFloat3 o;
-            float tmin;
-        };
-    };
-    union
-    {
-        bitrtFloat4 dir;
-        struct __align(16) {
-            bitrtFloat3 d;
-            float tmax;
-        };
-    };
+    bitrtFloat3 o;
+    float tmin;
+    bitrtFloat3 d;
+    float tmax;
     bitrtFloat4 rdir;
 } bitrtRay;
 
@@ -199,25 +181,18 @@ typedef struct __align(16) bitrtHit_t
 
 typedef struct __align(16) bitrtSphere_t
 {
-    union
-    {
-        bitrtFloat4 v;
-        struct __align(16) {
-            bitrtFloat3 centre;
-            float radius;
-        };
-    };
+    bitrtFloat3 centre;
+    float radius;
 } bitrtSphere;
 
 typedef struct __align(16) bitrtSence_t
 {
-    bitrtFloat4  bmin;
-    bitrtFloat4  bmax;
     bitrtUint3 * indexBuffer;
     bitrtFloat3* coordBuffer;
+    bitrtFloat4* meshBounds;
+    uint32_t     meshCnt;
     uint32_t     vertCnt;
     uint32_t     primCnt;
-    uint8_t      pad[8];
 } bitrtSence;
 
 #endif

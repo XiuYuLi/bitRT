@@ -3,14 +3,10 @@
 
 #if defined(_WIN64)||defined(_M_X64)||defined(_M_AMD64)||defined(__x86_64)||defined(__LP64__)
 #if defined(_MSC_VER)
-#if !defined(BITRT_SLIB)
 #if defined(_WINDLL)
 #define BITRTAPI __declspec(dllexport)
 #else
 #define BITRTAPI __declspec(dllimport)
-#endif
-#else
-#define BITRTAPI
 #endif
 #elif defined(__GNUC__)&&defined(__linux__)
 #if __GNUC__>=4
@@ -30,15 +26,14 @@ extern "C"
 {
 #endif
 
-#include "bitrt_types.h"
+#include <bitrt_types.h>
 
 typedef struct __bitrtCore *bitrtCore;
 
 bitrtResult BITRTAPI bitrtInit();
 bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
-bitrtResult BITRTAPI bitrtCheckExternalAccel(const bitrtExternalAccel*);
-bitrtSize2  BITRTAPI bitrtGetExternalAccelBuildingSizes(const bitrtExternalAccel*, const bitrtSence*);
-bitrtResult BITRTAPI bitrtBuildExternalAccel(void*, void*, const bitrtExternalAccel*, const bitrtSence*);
+bitrtSize2  BITRTAPI bitrtGetAccelBuildingSizes(const bitrtSence*);
+bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, const bitrtSence*);
 int         BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const void*, const bitrtRay*, int);
 bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtRay*, int);
 bitrtResult BITRTAPI bitrtDestroyCore(bitrtCore);
