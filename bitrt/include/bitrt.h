@@ -26,13 +26,14 @@ extern "C"
 {
 #endif
 
-#include <bitrt_types.h>
+#include "bitrt_types.h"
 
 typedef struct __bitrtCore *bitrtCore;
 
 bitrtResult BITRTAPI bitrtInit();
 bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
 bitrtSize2  BITRTAPI bitrtGetAccelBuildingSizes(const bitrtSence*);
+bitrtUint3  BITRTAPI bitrtGetAccelInfo(const void*);
 bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, const bitrtSence*);
 int         BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const void*, const bitrtRay*, int);
 bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtRay*, int);
