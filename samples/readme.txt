@@ -1,0 +1,1 @@
+Put *.dll file form ../bin/avx2 or avx512, and build sample with VS2022 (release mode)
