@@ -74,9 +74,10 @@ int main(int argc, char** argv)
         printf("Error : build failed!\n");
         goto __free_pt1;
     }
-    bitrtUint2 info=bitrtGetAccelInfo(accel_buf);
-    printf("  Node Count = %u\n", info.x);
-    printf("  Accel Depth = %u\n", info.y);
+    size_t size     =bitrtGetAccelInfo(accel_buf, bitrt_accel_info_size);
+    uint32_t n_nodes=(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_node_count);
+    uint32_t depth  =(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_depth);
+    printf("Accel Size = %llu\nNode Count = %u\nAccel Depth = %u\n", size, n_nodes, depth);
 
 __free_pt1:
     _aligned_free(accel_buf);

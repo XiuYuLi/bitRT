@@ -30,12 +30,18 @@ extern "C"
 
 typedef struct __bitrtCore *bitrtCore;
 
+typedef enum bitrtAccelInfo_t
+{
+    bitrt_accel_info_size       = 0,
+    bitrt_accel_info_node_count = 1,
+    bitrt_accel_info_depth      = 2
+} bitrtAccelInfo;
+
 bitrtResult BITRTAPI bitrtInit();
 bitrtResult BITRTAPI bitrtCreateCore(bitrtCore*);
 bitrtSize2  BITRTAPI bitrtGetAccelBuildingSizes(const bitrtSence*);
 bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, const bitrtSence*);
-bitrtUint2  BITRTAPI bitrtGetAccelInfo(const void*);
-size_t      BITRTAPI bitrtGetAccelCompressedSize(const void*);
+size_t      BITRTAPI bitrtGetAccelInfo(const void*, bitrtAccelInfo);
 bitrtResult BITRTAPI bitrtCompressAccel(void*, const void*);
 int         BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const void*, const bitrtRay*, int);
 bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtRay*, int);
