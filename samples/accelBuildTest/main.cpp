@@ -60,13 +60,14 @@ int main(int argc, char** argv)
 
     char* accel_buf=nullptr;
     char* build_buf=nullptr;
+    size_t accel_size;
+    uint32_t n_nodes, depth;
     if(bitrtInit()!=bitrtSuccess){
         printf("Error : initializing failed!\n");
         goto __free_pt0;
     }
 
     bitrtSize2 sizes=bitrtGetAccelBuildingSizes(&sence);
-    printf("Accel Size = %llu\nBuilding Space Size = %llu\n", sizes.x, sizes.y);
     accel_buf=(char*)_aligned_malloc(sizes.x, 64);
     build_buf=(char*)_aligned_malloc(sizes.y, 16);
 
@@ -74,10 +75,10 @@ int main(int argc, char** argv)
         printf("Error : build failed!\n");
         goto __free_pt1;
     }
-    size_t size     =bitrtGetAccelInfo(accel_buf, bitrt_accel_info_size);
-    uint32_t n_nodes=(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_node_count);
-    uint32_t depth  =(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_depth);
-    printf("Accel Size = %llu\nNode Count = %u\nAccel Depth = %u\n", size, n_nodes, depth);
+    accel_size=bitrtGetAccelInfo(accel_buf, bitrt_accel_info_size);
+    n_nodes=(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_node_count);
+    depth  =(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_depth);
+    printf("Accel Size = %f(M)\nNode Count = %u\nAccel Depth = %u\n", ((double)accel_size)/(1024*1024), n_nodes, depth);
 
 __free_pt1:
     _aligned_free(accel_buf);
