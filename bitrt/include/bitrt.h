@@ -43,8 +43,8 @@ bitrtSize2  BITRTAPI bitrtGetAccelBuildingSizes(const bitrtSence*);
 bitrtResult BITRTAPI bitrtBuildAccel(void*, void*, const bitrtSence*);
 size_t      BITRTAPI bitrtGetAccelInfo(const void*, bitrtAccelInfo);
 bitrtResult BITRTAPI bitrtCompressAccel(void*, const void*);
-int         BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const void*, const bitrtRay*, int);
-bool        BITRTAPI bitrtOccluded(bitrtCore, const void*, const bitrtRay*, int);
+int         BITRTAPI bitrtTrace(bitrtHit*, bitrtCore, const bitrtSence*, const void*, const bitrtRay*, int);
+bool        BITRTAPI bitrtOccluded(bitrtCore, const bitrtSence*, const void*, const bitrtRay*, int);
 bitrtResult BITRTAPI bitrtDestroyCore(bitrtCore);
 
 #ifdef __cplusplus
