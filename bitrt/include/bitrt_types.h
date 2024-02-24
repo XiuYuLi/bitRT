@@ -185,7 +185,7 @@ typedef struct __align(16) bitrtSphere_t
     float radius;
 } bitrtSphere;
 
-typedef struct __align(16) bitrtSence_t
+typedef struct bitrtSence_t
 {
     bitrtUint3 * indexBuffer;
     bitrtFloat3* coordBuffer;

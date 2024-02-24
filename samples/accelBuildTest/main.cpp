@@ -58,34 +58,35 @@ int main(int argc, char** argv)
     delete[] buf;
     get_global_bbox(&sence);
 
-    char* accel_buf=nullptr;
-    char* build_buf=nullptr;
-    size_t accel_size;
-    uint32_t n_nodes, depth;
     if(bitrtInit()!=bitrtSuccess){
         printf("Error : initializing failed!\n");
         goto __free_pt0;
     }
 
-    bitrtSize2 sizes=bitrtGetAccelBuildingSizes(&sence);
-    accel_buf=(char*)_aligned_malloc(sizes.x, 64);
-    build_buf=(char*)_aligned_malloc(sizes.y, 16);
-
-    if(bitrtBuildAccel(accel_buf, build_buf, &sence)!=bitrtSuccess){
-        printf("Error : build failed!\n");
-        goto __free_pt1;
+    {
+        bitrtSize2 sizes=bitrtGetAccelBuildingSizes(&sence);
+        printf("Accel Size = %llu\nBuilding Space Size = %llu\n", sizes.x, sizes.y);
+        char* accel_buf=(char*)_aligned_malloc(sizes.x, 64);
+        char* build_buf=(char*)_aligned_malloc(sizes.y, 16);
+        if(bitrtBuildAccel(accel_buf, build_buf, &sence)!=bitrtSuccess){
+            printf("Error : build failed!\n");
+            goto __free_pt1;
+        }
+        {
+            size_t accel_size=bitrtGetAccelInfo(accel_buf, bitrt_accel_info_size);
+            uint32_t node_cnt=(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_node_count);
+            uint32_t depth=(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_depth);
+            printf("  Accel Size = %f(M)\n", ((double)accel_size)/(1024*1024));
+            printf("  Node Count = %u\n", node_cnt);
+            printf("  Accel Depth = %u\n", depth);
+        }
+    __free_pt1:
+        _aligned_free(accel_buf);
+        _aligned_free(build_buf);
     }
-    accel_size=bitrtGetAccelInfo(accel_buf, bitrt_accel_info_size);
-    n_nodes=(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_node_count);
-    depth  =(uint32_t)bitrtGetAccelInfo(accel_buf, bitrt_accel_info_depth);
-    printf("Accel Size = %f(M)\nNode Count = %u\nAccel Depth = %u\n", ((double)accel_size)/(1024*1024), n_nodes, depth);
-
-__free_pt1:
-    _aligned_free(accel_buf);
-    _aligned_free(build_buf);
 __free_pt0:
     delete[] sence.coordBuffer;
     delete[] sence.indexBuffer;
     delete[] sence.meshBounds;
-	return 0;  
+    return 0;  
 }
